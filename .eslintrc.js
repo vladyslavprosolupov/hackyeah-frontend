@@ -20,6 +20,12 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-multiple-empty-lines': ['error', { 'max': 2 }],
+    'vue/component-name-in-template-casing': ["error",
+      "kebab-case",
+      {
+        "ignores": []
+      }
+    ],
     'vue/html-closing-bracket-spacing': 0,
     'vue/max-attributes-per-line': [2, {
       'singleline': 3,
