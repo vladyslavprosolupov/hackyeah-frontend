@@ -2,7 +2,13 @@
   <div class="options-page">
     <div class="background">
       <div class="background--color"/>
-      <video class="video"/>
+      <video
+        id="video"
+        class="video"
+        autoplay
+        playsinline
+      />
+      <canvas id="video-canvas" hidden/>
     </div>
 
     <div class="content">
@@ -56,9 +62,14 @@
 </template>
 
 <script>
+import { getCameraDevice } from '@/assets/js/app'
+
 export default {
   created () {
     this.$store.commit('setAnimationDir', 'slide-left')
+  },
+  mounted () {
+    getCameraDevice()
   }
 }
 </script>
@@ -67,6 +78,8 @@ export default {
   .options-page {
     background: #fff;
     @include fill-space;
+    left: 0;
+    top: 0;
   }
 
   .background {
@@ -83,6 +96,7 @@ export default {
       height: 100%;
       width: 100%;
       background-color: rgba(0, 0, 0, .6);
+      position: absolute;
     }
   }
 

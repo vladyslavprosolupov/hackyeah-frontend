@@ -36,6 +36,7 @@ export default {
     height: 100%;
     width: 100vw;
     position: relative;
+    overflow: hidden;
   }
 
   #desktop {
@@ -63,6 +64,6 @@ export default {
     height: 100%;
     width: 100vw;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 </style>

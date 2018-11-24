@@ -104,6 +104,8 @@ export default {
   .option-page {
     background: #fff;
     @include fill-space;
+    top: 0;
+    left: 0;
   }
 
   .background {

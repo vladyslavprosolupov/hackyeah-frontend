@@ -7,17 +7,21 @@
 }
 
 .slide-right-enter {
+  -webkit-transform-origin: 50% 50%;
   transform: translate3d(-100%, 0, 0);
 }
 
 .slide-right-leave-to {
+  transform-origin: 50% 50%;
   transform: translate3d(100%, 0, 0);
 }
 
 .slide-left-enter {
+  transform-origin: 50% 50%;
   transform: translate3d(100%, 0, 0);
 }
 
 .slide-left-leave-to {
+  transform-origin: 50% 50%;
   transform: translate3d(-100%, 0, 0);
 }

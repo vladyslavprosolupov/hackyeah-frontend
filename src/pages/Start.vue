@@ -24,6 +24,8 @@ export default {
 <style lang="scss" scoped>
   .start {
     @include fill-space;
+    left: 0;
+    top: 0;
   }
 
   .logo {
