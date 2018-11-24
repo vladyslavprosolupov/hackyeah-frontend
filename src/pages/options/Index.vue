@@ -2,7 +2,7 @@
   <div class="options-page">
     <div class="background">
       <div class="background--color"/>
-      <video/>
+      <video class="video"/>
     </div>
 
     <div class="content">
@@ -79,10 +79,15 @@ export default {
     pointer-events: none;
 
     &--color {
+      z-index: 2;
       height: 100%;
       width: 100%;
       background-color: rgba(0, 0, 0, .6);
     }
+  }
+
+  .video {
+    z-index: 1;
   }
 
   .content {

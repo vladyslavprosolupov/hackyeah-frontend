@@ -1,15 +1,37 @@
 <template>
   <div class="option-page">
     <div class="background">
-      <video/>
+      <div class="background--color" :class="{ 'background--color--loading': loading }">
+        <div v-if="!response" class="loading-info">
+          <span class="background--color__title">
+            {{ loadingText }}
+          </span>
+          <preloader/>
+        </div>
+      </div>
+
+      <video class="video"/>
     </div>
 
     <div class="content">
-      <div class="close" @click="goBack">
-        <img src="/img/exit_red.png" alt="close" class="img">
+      <div class="close" :class="{ 'close--no-bg': loading }" @click="goBack">
+        <img
+          v-if="loading"
+          src="/img/exit_red.png"
+          alt="close"
+          class="img"
+        >
+        <img
+          v-else
+          src="/img/left-arrow.png"
+          alt="back"
+          class="img"
+        >
       </div>
 
-      <button-component class="content__button">
+      <response v-if="response" :type="type" :response="response"/>
+
+      <button-component class="content__button" :class="{ 'content__button--hidden': loading }" @click.native="load">
         <img :src="button.icon" alt="icon" class="content__button__img">
         {{ button.text }}
       </button-component>
@@ -19,23 +41,47 @@
 
 <script>
 import ButtonComponent from '@/components/Button'
+import Preloader from '@/components/Preloader'
+import Response from '@/components/response/Index'
 
 export default {
   components: {
-    ButtonComponent
+    ButtonComponent,
+    Preloader,
+    Response
   },
   data () {
     return {
       button: {
         text: '',
         icon: ''
-      }
+      },
+      loading: false,
+      error: false,
+      response: null,
+      type: ''
+    }
+  },
+  computed: {
+    loadingText () {
+      return !this.error ? 'Making some magic...' : 'Our magic not enough here... Try again'
     }
   },
   methods: {
     goBack () {
-      this.$store.commit('setAnimationDir', 'slide-right')
-      this.$router.push('/options')
+      if (this.loading) {
+        this.loading = false
+        this.response = null
+      } else {
+        this.$store.commit('setAnimationDir', 'slide-right')
+        this.$router.push('/options')
+      }
+    },
+    load () {
+      this.loading = true
+      setTimeout(() => {
+        this.response = {}
+      }, 1000)
     }
   }
 }
@@ -55,6 +101,36 @@ export default {
     top: 0;
     left: 0;
     pointer-events: none;
+
+    &--color {
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, .6);
+      transform: translate3d(0, 100%, 0);
+      transition: transform .5s;
+      z-index: 2;
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      @include center-content;
+
+      &__title {
+        margin-bottom: 45px;
+      }
+
+      &--loading {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+  }
+
+  .loading-info {
+    @include center-content;
+    flex-direction: column;
+  }
+
+  .video {
+    z-index: 1;
   }
 
   .close {
@@ -67,6 +143,11 @@ export default {
     left: 2%;
     padding: 14px;
     @include center-content;
+    transition: background-color .15s linear .35s;
+
+    &--no-bg {
+      background-color: rgba(255, 255, 255, 0);
+    }
   }
 
   .content {
@@ -86,6 +167,10 @@ export default {
       display: flex;
       @include center-content;
       justify-content: space-around;
+
+      &--hidden {
+        @include hide-visually;
+      }
 
       &__img {
         max-width: 34px;

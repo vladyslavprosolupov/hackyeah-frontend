@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Start from '@/pages/Start'
-import Options from '@/pages/Options'
-import Geometry from '@/pages/option/Geometry'
-import History from '@/pages/option/History'
-import Languages from '@/pages/option/Languages'
+import Options from '@/pages/options/Index'
+import Geometry from '@/pages/options/Geometry'
+import History from '@/pages/options/History'
+import Languages from '@/pages/options/Languages'
 
 Vue.use(Router)
 
