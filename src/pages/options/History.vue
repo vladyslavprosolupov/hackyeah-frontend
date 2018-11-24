@@ -8,11 +8,7 @@ export default {
       button: {
         text: 'scan face',
         icon: '/img/options/history_white.png'
-      },
-      loading: false,
-      error: false,
-      response: null,
-      type: 'history'
+      }
     }
   }
 }

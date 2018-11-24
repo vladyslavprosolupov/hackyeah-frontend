@@ -8,11 +8,7 @@ export default {
       button: {
         text: 'translate object',
         icon: '/img/options/languages_white.png'
-      },
-      loading: false,
-      error: false,
-      response: null,
-      type: 'languages'
+      }
     }
   }
 }

@@ -1,62 +1,43 @@
 <template>
-  <div class="option-page">
-    <div class="background">
-      <div
-        class="background--color"
-        :class="{ 'background--color--loading': loading || (response && type !== 'languages') }"
+  <div class="content">
+    <div class="close" :class="{ 'close--no-bg': loading || response }" @click="goBack">
+      <img
+        v-if="loading || response"
+        src="/img/exit_red.png"
+        alt="close"
+        class="img"
       >
-        <div v-if="!response" class="loading-info">
-          <span class="background--color__title">
-            {{ loadingText }}
-          </span>
-          <preloader/>
-        </div>
-      </div>
-
-      <video class="video"/>
+      <img
+        v-else
+        src="/img/left-arrow.png"
+        alt="back"
+        class="img"
+      >
     </div>
 
-    <div class="content">
-      <div class="close" :class="{ 'close--no-bg': loading || response }" @click="goBack">
-        <img
-          v-if="loading || response"
-          src="/img/exit_red.png"
-          alt="close"
-          class="img"
-        >
-        <img
-          v-else
-          src="/img/left-arrow.png"
-          alt="back"
-          class="img"
-        >
-      </div>
+    <response v-if="response" :type="type" :response="response"/>
 
-      <response v-if="response" :type="type" :response="response"/>
-
-      <button-component
-        class="content__button"
-        :class="{ 'content__button--hidden': loading || response }"
-        @click.native="load"
-      >
-        <img :src="button.icon" alt="icon" class="content__button__img">
-        <span :style="buttonTextStyle">
-          {{ button.text }}
-        </span>
-      </button-component>
-    </div>
+    <button-component
+      class="content__button"
+      :class="{ 'content__button--hidden': loading || response }"
+      @click.native="load"
+    >
+      <img :src="button.icon" alt="icon" class="content__button__img">
+      <span :style="buttonTextStyle">
+        {{ button.text }}
+      </span>
+    </button-component>
   </div>
 </template>
 
 <script>
 import ButtonComponent from '@/components/Button'
-import Preloader from '@/components/Preloader'
 import Response from '@/components/response/Index'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
   components: {
     ButtonComponent,
-    Preloader,
     Response
   },
   data () {
@@ -64,36 +45,38 @@ export default {
       button: {
         text: '',
         icon: ''
-      },
-      loading: false,
-      error: false,
-      response: null,
-      type: ''
+      }
     }
   },
   computed: {
-    loadingText () {
-      return !this.error ? 'Making some magic...' : 'Our magic not enough here... Try again'
-    },
+    ...mapState({
+      type: state => state.option.type,
+      loading: state => state.option.loading,
+      response: state => state.option.response
+    }),
     buttonTextStyle () {
       return this.type === 'history' ? 'position: relative; left: -34px;' : ''
     }
   },
   methods: {
+    ...mapMutations(['setLoading', 'setResponse', 'setAnimationDir', 'setType']),
     goBack () {
       if (this.loading || this.response) {
-        this.loading = false
-        this.response = null
+        this.setLoading(false)
+        this.setResponse(null)
       } else {
-        this.$store.commit('setAnimationDir', 'slide-right')
-        this.$router.push('/options')
+        this.setAnimationDir('slide-right')
+        this.setType('options')
+        this.$nextTick(() => {
+          this.setAnimationDir('slide-left')
+        })
       }
     },
     load () {
-      this.loading = true
+      this.setLoading(true)
       setTimeout(() => {
-        this.response = {}
-        this.loading = false
+        this.setResponse({})
+        this.setLoading(false)
       }, 1000)
     }
   }
@@ -101,72 +84,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .option-page {
-    background: #fff;
-    @include fill-space;
-    top: 0;
-    left: 0;
-  }
-
-  .background {
-    position: fixed;
-    height: 100%;
-    width: 100vw;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-
-    &--color {
-      height: 100%;
-      width: 100%;
-      background-color: rgba(0, 0, 0, .6);
-      transform: translate3d(0, 100%, 0);
-      transition: transform .5s;
-      z-index: 2;
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      @include center-content;
-
-      &__title {
-        margin-bottom: 45px;
-      }
-
-      &--loading {
-        transform: translate3d(0, 0, 0);
-      }
-    }
-  }
-
-  .loading-info {
-    @include center-content;
-    flex-direction: column;
-  }
-
-  .video {
-    z-index: 1;
-  }
-
-  .close {
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, .6);
-    width: 28px;
-    color: $red;
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    padding: 14px;
-    @include center-content;
-    transition: background-color .15s linear .35s;
-
-    &--no-bg {
-      background-color: rgba(255, 255, 255, 0);
-    }
-  }
-
   .content {
-    position: relative;
+    position: absolute;
     z-index: 3;
     height: 100%;
     width: 100%;
@@ -190,6 +109,23 @@ export default {
       &__img {
         max-width: 34px;
       }
+    }
+  }
+
+  .close {
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .6);
+    width: 28px;
+    color: $red;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    padding: 14px;
+    @include center-content;
+    transition: background-color .15s linear .35s;
+
+    &--no-bg {
+      background-color: rgba(255, 255, 255, 0);
     }
   }
 

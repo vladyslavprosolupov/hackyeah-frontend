@@ -8,11 +8,7 @@ export default {
       button: {
         text: 'Scan geometry figure',
         icon: '/img/options/geometry_white.png'
-      },
-      loading: false,
-      error: false,
-      response: null,
-      type: 'geometry'
+      }
     }
   }
 }
