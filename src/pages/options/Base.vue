@@ -15,7 +15,12 @@
       >
     </div>
 
-    <response v-if="response" :type="type" :response="response"/>
+    <response
+      v-if="response"
+      :type="type"
+      :response="response"
+      class="response"
+    />
 
     <button-component
       class="content__button"
@@ -91,6 +96,7 @@ export default {
     width: 100%;
     top: 0;
     left: 0;
+    overflow-y: auto;
 
     &__button {
       position: absolute;
@@ -123,10 +129,15 @@ export default {
     padding: 14px;
     @include center-content;
     transition: background-color .15s linear .35s;
+    z-index: 2;
 
     &--no-bg {
       background-color: rgba(255, 255, 255, 0);
     }
+  }
+
+  .response {
+    z-index: 1;
   }
 
   .title {

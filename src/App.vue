@@ -65,5 +65,7 @@ export default {
     width: 100vw;
     position: relative;
     overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 </style>

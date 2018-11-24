@@ -64,6 +64,7 @@ export default {
     width: 100%;
     top: 0;
     left: 0;
+    overflow-y: auto;
   }
 
   .title {

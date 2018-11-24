@@ -10,7 +10,7 @@
       {{ data.name || 'Bolesław Chrobry' }}
     </div>
     <div class="info">
-      {{ data.wikipedia_paragraph || 'Przykładowe info' }}
+      {{ data.wikipedia_paragraph || `Przykładowe info<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>` }}
     </div>
     <div class="youtube">
       <iframe
@@ -40,10 +40,11 @@ export default {
   .history-response {
     @include center-content;
     flex-direction: column;
-    top: 100px;
+    top: 0;
     left: 0;
     position: absolute;
     width: 100%;
+    margin-top: 100px;
   }
 
   .photo {
