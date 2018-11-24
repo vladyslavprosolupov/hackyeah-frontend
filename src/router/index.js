@@ -12,6 +12,12 @@ const router = new Router({
       name: 'Start',
       path: '/',
       component: Start
+    },
+    {
+      path: '*',
+      redirect () {
+        return '/'
+      }
     }
   ]
 })

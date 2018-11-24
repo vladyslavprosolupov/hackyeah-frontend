@@ -1,0 +1,22 @@
+html {
+  background: #000;
+}
+
+.button {
+  background: $red;
+  border-radius: 4px;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+}

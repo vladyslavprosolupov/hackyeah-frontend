@@ -1,0 +1,10 @@
+@import '~sass-utils-collection';
+
+// sass-utils-collection config
+$media-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 1170px,
+  xl: 1440px,
+);
