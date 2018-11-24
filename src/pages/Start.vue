@@ -3,13 +3,29 @@
     <div class="logo">
       <img src="/img/logo.png" alt="logo" class="img">
     </div>
-    <router-link to="/options" class="button">
-      Start
+    <router-link to="/options">
+      <button-component type="span">
+        Start
+      </button-component>
     </router-link>
   </div>
 </template>
 
+<script>
+import ButtonComponent from '@/components/Button'
+
+export default {
+  components: {
+    ButtonComponent
+  }
+}
+</script>
+
 <style lang="scss" scoped>
+  .start {
+    @include fill-space;
+  }
+
   .logo {
     position: absolute;
     top: 50%;

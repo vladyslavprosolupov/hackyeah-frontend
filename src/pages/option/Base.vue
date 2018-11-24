@@ -1,70 +1,48 @@
 <template>
-  <div class="options-page">
+  <div class="option-page">
     <div class="background">
-      <div class="background--color"/>
       <video/>
     </div>
 
     <div class="content">
-      <h1 class="title">
-        Scan and see more
-      </h1>
-
-      <div class="options">
-        <router-link to="/options/geometry" class="option">
-          <div class="icon">
-            <img src="/img/options/geometry_red_shadow.png" alt="geometry" class="img img--1">
-          </div>
-          <div class="info">
-            <div class="main">
-              Geometry figure to 3D model
-            </div>
-            <div class="description">
-              #math
-            </div>
-          </div>
-        </router-link>
-        <router-link to="/options/history" class="option">
-          <div class="icon">
-            <img src="/img/options/history_red_shadow.png" alt="history" class="img img--2">
-          </div>
-          <div class="info">
-            <div class="main">
-              Historic person's face to Facts
-            </div>
-            <div class="description">
-              #history
-            </div>
-          </div>
-        </router-link>
-        <router-link to="/options/languages" class="option">
-          <div class="icon">
-            <img src="/img/options/languages_red_shadow.png" alt="languages" class="img img--3">
-          </div>
-          <div class="info">
-            <div class="main">
-              Object into translations
-            </div>
-            <div class="description">
-              #languages
-            </div>
-          </div>
-        </router-link>
+      <div class="close" @click="goBack">
+        <img src="/img/exit_red.png" alt="close" class="img">
       </div>
+
+      <button-component class="content__button">
+        <img :src="button.icon" alt="icon" class="content__button__img">
+        {{ button.text }}
+      </button-component>
     </div>
   </div>
 </template>
 
 <script>
+import ButtonComponent from '@/components/Button'
+
 export default {
-  created () {
-    this.$store.commit('setAnimationDir', 'slide-left')
+  components: {
+    ButtonComponent
+  },
+  data () {
+    return {
+      button: {
+        text: '',
+        icon: ''
+      }
+    }
+  },
+  methods: {
+    goBack () {
+      this.$store.commit('setAnimationDir', 'slide-right')
+      this.$router.push('/options')
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .options-page {
+  .option-page {
     background: #fff;
     @include fill-space;
   }
@@ -77,12 +55,18 @@ export default {
     top: 0;
     left: 0;
     pointer-events: none;
+  }
 
-    &--color {
-      height: 100%;
-      width: 100%;
-      background-color: rgba(0, 0, 0, .6);
-    }
+  .close {
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, .6);
+    width: 28px;
+    color: $red;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    padding: 14px;
+    @include center-content;
   }
 
   .content {
@@ -92,6 +76,21 @@ export default {
     width: 100%;
     top: 0;
     left: 0;
+
+    &__button {
+      position: absolute;
+      bottom: 10%;
+      width: 80%;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+      display: flex;
+      @include center-content;
+      justify-content: space-around;
+
+      &__img {
+        max-width: 34px;
+      }
+    }
   }
 
   .title {

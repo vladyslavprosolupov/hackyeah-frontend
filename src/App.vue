@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="mobile">
-      <transition :name="transitionDir" mode="out-in">
+      <transition :name="transitionDir">
         <router-view class="main-view"/>
       </transition>
     </div>
@@ -35,6 +35,7 @@ export default {
   #mobile {
     height: 100%;
     width: 100vw;
+    position: relative;
   }
 
   #desktop {

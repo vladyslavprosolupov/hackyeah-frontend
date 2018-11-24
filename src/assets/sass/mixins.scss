@@ -8,3 +8,11 @@ $media-breakpoints: (
   lg: 1170px,
   xl: 1440px,
 );
+
+@mixin fill-space($size: 100%, $position: absolute) {
+  position: $position;
+  width: $size;
+  height: $size;
+  top: ($size - 100%) / -2;
+  left: ($size - 100%) / -2;
+}
