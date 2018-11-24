@@ -1,7 +1,10 @@
 <template>
   <div class="option-page">
     <div class="background">
-      <div class="background--color" :class="{ 'background--color--loading': loading }">
+      <div
+        class="background--color"
+        :class="{ 'background--color--loading': loading || (response && type !== 'languages') }"
+      >
         <div v-if="!response" class="loading-info">
           <span class="background--color__title">
             {{ loadingText }}
@@ -14,9 +17,9 @@
     </div>
 
     <div class="content">
-      <div class="close" :class="{ 'close--no-bg': loading }" @click="goBack">
+      <div class="close" :class="{ 'close--no-bg': loading || response }" @click="goBack">
         <img
-          v-if="loading"
+          v-if="loading || response"
           src="/img/exit_red.png"
           alt="close"
           class="img"
@@ -31,9 +34,15 @@
 
       <response v-if="response" :type="type" :response="response"/>
 
-      <button-component class="content__button" :class="{ 'content__button--hidden': loading }" @click.native="load">
+      <button-component
+        class="content__button"
+        :class="{ 'content__button--hidden': loading || response }"
+        @click.native="load"
+      >
         <img :src="button.icon" alt="icon" class="content__button__img">
-        {{ button.text }}
+        <span :style="buttonTextStyle">
+          {{ button.text }}
+        </span>
       </button-component>
     </div>
   </div>
@@ -65,11 +74,14 @@ export default {
   computed: {
     loadingText () {
       return !this.error ? 'Making some magic...' : 'Our magic not enough here... Try again'
+    },
+    buttonTextStyle () {
+      return this.type === 'history' ? 'position: relative; left: -34px;' : ''
     }
   },
   methods: {
     goBack () {
-      if (this.loading) {
+      if (this.loading || this.response) {
         this.loading = false
         this.response = null
       } else {
@@ -81,6 +93,7 @@ export default {
       this.loading = true
       setTimeout(() => {
         this.response = {}
+        this.loading = false
       }, 1000)
     }
   }
