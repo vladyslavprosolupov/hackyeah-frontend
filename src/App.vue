@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="mobile">
-      <transition :name="transitionDir">
+      <transition :name="transitionDir" mode="out-in">
         <router-view class="main-view"/>
       </transition>
     </div>
@@ -17,7 +17,7 @@ export default {
   name: 'App',
   computed: {
     transitionDir () {
-      return 'slide-right'
+      return this.$store.state.animation.animationDir
     }
   }
 }
@@ -28,6 +28,13 @@ export default {
 
   #app {
     font-family: $main-font;
+    height: 100%;
+    width: 100%;
+  }
+
+  #mobile {
+    height: 100%;
+    width: 100vw;
   }
 
   #desktop {
@@ -52,8 +59,8 @@ export default {
 
 
   .main-view {
+    height: 100%;
     width: 100vw;
-    height: 100vh;
     position: relative;
     overflow: hidden;
   }

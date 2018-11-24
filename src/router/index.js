@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Start from '@/pages/Start'
+import Options from '@/pages/Options'
 
 Vue.use(Router)
 
@@ -12,6 +13,11 @@ const router = new Router({
       name: 'Start',
       path: '/',
       component: Start
+    },
+    {
+      name: '',
+      path: '/options',
+      component: Options
     },
     {
       path: '*',

@@ -3,21 +3,21 @@
 .slide-right-enter-active,
 .slide-left-leave-active,
 .slide-left-enter-active {
-  transition: transform 0.8s;
+  transition: transform 0.5s;
 }
 
 .slide-right-enter {
-  transform: translate(-100vw, 0);
+  transform: translate(-100%, 0);
 }
 
 .slide-right-leave-to {
-  transform: translate(100vw, 0);
+  transform: translate(100%, 0);
 }
 
 .slide-left-enter {
-  transform: translate(100vw, 0);
+  transform: translate(100%, 0);
 }
 
 .slide-left-leave-to {
-  transform: translate(-100vw, 0);
+  transform: translate(-100%, 0);
 }

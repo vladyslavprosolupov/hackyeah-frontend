@@ -3,21 +3,13 @@
     <div class="logo">
       <img src="/img/logo.png" alt="logo" class="img">
     </div>
-    <button class="button">
+    <router-link to="/options" class="button">
       Start
-    </button>
+    </router-link>
   </div>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style lang="scss" scoped>
-  .start {
-    background: #000;
-  }
-
   .logo {
     position: absolute;
     top: 50%;
