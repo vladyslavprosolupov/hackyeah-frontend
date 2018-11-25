@@ -18,7 +18,7 @@
         autoplay
         playsinline
       />
-      <canvas id="video-canvas" hidden/>
+      <canvas id="video-canvas" :hidden="canvasHidden"/>
     </div>
     <transition :name="animationDir">
       <component :is="currentView" :key="type"/>
@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import { getCameraDevice } from '@/assets/js/app'
+import { getCameraDevice } from '../assets/js/app'
 import { mapState } from 'vuex'
-import Menu from '@/components/options/Menu'
-import Geometry from '@/components/options/Geometry'
-import History from '@/components/options/History'
-import Languages from '@/components/options/Languages'
-import Preloader from '@/components/Preloader'
+import Menu from '../components/options/Menu'
+import Geometry from '../components/options/Geometry'
+import History from '../components/options/History'
+import Languages from '../components/options/Languages'
+import Preloader from '../components/Preloader'
 
 export default {
   components: {
@@ -49,6 +49,10 @@ export default {
     }),
     loadingText () {
       return !this.error ? 'Making some magic...' : 'Our magic not enough here... Try again'
+    },
+    canvasHidden () {
+      console.log(!(this.loading || this.response))
+      return !(this.loading || this.response)
     },
     currentView () {
       const views = {
@@ -74,6 +78,12 @@ export default {
     left: 0;
     top: 0;
     overflow: hidden;
+  }
+
+  #video-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .background {

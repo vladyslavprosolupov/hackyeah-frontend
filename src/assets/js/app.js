@@ -34,7 +34,7 @@ function start (deviceId) {
 function capturePhoto () {
   const video = document.getElementById('video')
 
-  const canvas = document.createElement('canvas')
+  const canvas = document.getElementById('video-canvas')
   const width = video.offsetWidth
   const height = video.offsetHeight
 

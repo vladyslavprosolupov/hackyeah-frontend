@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Start from '@/pages/Start'
-import Options from '@/pages/options/Index'
+import Options from '@/pages/Options'
 
 Vue.use(Router)
 

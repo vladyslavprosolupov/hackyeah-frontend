@@ -13,10 +13,6 @@ export default {
       type: String,
       required: true,
       validate: propVal => ['geometry', 'history', 'languages'].includes(propVal)
-    },
-    response: {
-      type: [Object, Array],
-      required: true
     }
   },
   computed: {
@@ -28,6 +24,9 @@ export default {
       }
 
       return types[this.type]
+    },
+    response () {
+      return this.$store.state.option.response
     }
   }
 }

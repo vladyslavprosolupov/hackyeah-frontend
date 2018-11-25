@@ -18,11 +18,10 @@
     <response
       v-if="response"
       :type="type"
-      :response="response"
       class="response"
     />
 
-    <div v-if="!response && !loading && type !== 'options'" class="line"/>
+    <div v-if="!response && !loading && type === 'geometry'" class="line"/>
 
     <button-component
       class="content__button"
@@ -71,10 +70,9 @@ export default {
   methods: {
     ...mapMutations(['setLoading', 'setResponse', 'setAnimationDir', 'setType']),
     goBack () {
-      if (this.loading || this.response) {
-        this.setLoading(false)
-        this.setResponse(null)
-      } else {
+      this.setLoading(false)
+      this.setResponse(null)
+      if (!(this.loading || this.response)) {
         this.setAnimationDir('slide-right')
         this.setType('options')
         this.$nextTick(() => {
@@ -84,9 +82,16 @@ export default {
     },
     load () {
       this.setLoading(true)
-      axios.post('/process-block', {
+      const urls = {
+        'geometry': '/process-block',
+        'history': '/history',
+        'languages': '/languages'
+      }
+
+      axios.post(urls[this.type], {
         image: capturePhoto()
-      }).then(res => {
+      }).then(r => {
+        const res = r.data
         console.log(res)
         this.setResponse(res)
         this.setLoading(false)
