@@ -22,6 +22,8 @@
       class="response"
     />
 
+    <div v-if="!response && !loading && type !== 'options'" class="line"/>
+
     <button-component
       class="content__button"
       :class="{ 'content__button--hidden': loading || response }"
@@ -36,9 +38,12 @@
 </template>
 
 <script>
+/* eslint-disable */
 import ButtonComponent from '../Button'
 import Response from '../response/Index'
+import axios from 'axios'
 import { mapMutations, mapState } from 'vuex'
+import { capturePhoto } from '@/assets/js/app'
 
 export default {
   components: {
@@ -79,10 +84,13 @@ export default {
     },
     load () {
       this.setLoading(true)
-      setTimeout(() => {
-        this.setResponse({})
+      axios.post('/process-block', {
+        image: capturePhoto()
+      }).then(res => {
+        console.log(res)
+        this.setResponse(res)
         this.setLoading(false)
-      }, 1000)
+      }).catch(console.error)
     }
   }
 }
@@ -138,6 +146,14 @@ export default {
 
   .response {
     z-index: 1;
+  }
+
+  .line {
+    position: fixed;
+    z-index: 10000;
+    width: 100%;
+    border-top: 2px dashed $red;
+    top: 400px;
   }
 
   .title {

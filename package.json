@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env HOST=0.0.0.0 API_URL=dev-api npm run serve",
+    "dev": "cross-env HOST=0.0.0.0 VUE_APP_API_URL=https://f441ec99.ngrok.io npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"

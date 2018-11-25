@@ -1,4 +1,5 @@
 import { Camera } from './camera.js'
+
 /* eslint-disable */
 
 function getCameraDevice () {
@@ -20,17 +21,27 @@ function getCameraDevice () {
 //
 
 function start (deviceId) {
-  const cameraCanvas = document.getElementById('video-canvas')
   const video = document.getElementById('video')
-  const cameraContext = cameraCanvas.getContext('2d')
-
 
   const camera = new Camera()
   camera.getPreview(deviceId, video, (videoWidth, videoHeight) => {
-  },
-  error => { // error
-    console.error('ERROR preview', error)
-  })
+    },
+    error => { // error
+      console.error('ERROR preview', error)
+    })
 }
 
-export { getCameraDevice }
+function capturePhoto () {
+  const video = document.getElementById('video')
+
+  const canvas = document.createElement('canvas')
+  const width = video.offsetWidth
+  const height = video.offsetHeight
+
+  canvas.width = width
+  canvas.height = height
+  canvas.getContext('2d').drawImage(video, 0, 0, width, height)
+  return canvas.toDataURL('image/png')
+}
+
+export { getCameraDevice, capturePhoto }
