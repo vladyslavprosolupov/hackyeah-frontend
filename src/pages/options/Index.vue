@@ -29,10 +29,10 @@
 <script>
 import { getCameraDevice } from '@/assets/js/app'
 import { mapState } from 'vuex'
-import Menu from './Menu'
-import Geometry from '@/pages/options/Geometry'
-import History from '@/pages/options/History'
-import Languages from '@/pages/options/Languages'
+import Menu from '@/components/options/Menu'
+import Geometry from '@/components/options/Geometry'
+import History from '@/components/options/History'
+import Languages from '@/components/options/Languages'
 import Preloader from '@/components/Preloader'
 
 export default {

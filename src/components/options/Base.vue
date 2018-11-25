@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import ButtonComponent from '@/components/Button'
-import Response from '@/components/response/Index'
+import ButtonComponent from '../Button'
+import Response from '../response/Index'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
