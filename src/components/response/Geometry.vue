@@ -1,6 +1,6 @@
 <template>
   <div class="geometry-response">
-    <three-j-s/>
+    <three-j-s :response="data"/>
     <div class="comment">
       <span class="title">
         pitch, roll, yaw...

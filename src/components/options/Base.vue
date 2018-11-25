@@ -68,7 +68,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setLoading', 'setResponse', 'setAnimationDir', 'setType']),
+    ...mapMutations(['setLoading', 'setResponse', 'setAnimationDir', 'setType', 'setError']),
     goBack () {
       if (!this.loading && !this.response) {
         this.setAnimationDir('slide-right')
@@ -80,20 +80,16 @@ export default {
 
       this.setLoading(false)
       this.setResponse(null)
+      this.setError(null)
     },
     load () {
       this.setLoading(true)
       const urls = {
         'geometry': '/process-block',
         'history': '/history',
-        'languages': '/languages'
+        'languages': '/translate'
       }
 
-
-      // const res = {}
-      // console.log(res)
-      // this.setResponse(res)
-      // this.setLoading(false)
       axios.post(urls[this.type], {
         image: capturePhoto()
       }).then(r => {
@@ -101,7 +97,10 @@ export default {
         console.log(res)
         this.setResponse(res)
         this.setLoading(false)
-      }).catch(console.error)
+      }).catch(err => {
+        console.error(err)
+        this.setError(err)
+      })
     }
   }
 }

@@ -6,10 +6,17 @@
 
 <script>
 import * as Three from 'three'
+/* eslint-disable */
 
 const OrbitControls = require('three-orbit-controls')(Three)
 
 export default {
+  props: {
+    response: {
+      type: [Array, Object],
+      required: true
+    }
+  },
   data () {
     return {
       camera: null,
@@ -23,6 +30,26 @@ export default {
     this.animate()
   },
   methods: {
+    drawLine (vert, color) {
+
+
+      var material = new Three.LineBasicMaterial({
+        color: color,
+        linewidth: 4
+      });
+
+      const geometry = new Three.Geometry();
+      geometry.vertices.push(
+        new Three.Vector3(...vert.from),
+        new Three.Vector3(...vert.to),
+      );
+
+      const line = new Three.Line(geometry, material);
+      line.rotation.x = Math.PI / 2
+
+
+      this.scene.add(line);
+    },
     init () {
       let container = document.getElementById('container')
 
@@ -31,22 +58,38 @@ export default {
 
       this.scene = new Three.Scene()
 
-      // let geometry = new Three.BoxGeometry(0.2, 0.2, 0.2)
-      // let material = new Three.MeshNormalMaterial()
-      const geom = new Three.Geometry()
-      const v1 = new Three.Vector3(0, 0, 0)
-      const v2 = new Three.Vector3(0, 0.2, 0)
-      const v3 = new Three.Vector3(0, 0.2, 0.2)
+      const average = arr => arr.reduce((p, c) => p + c, 0) / arr.length
+      const X = average(this.response.nodes.map(node => node.x))
+      const Y = average(this.response.nodes.map(node => node.y))
+      const Z = average(this.response.nodes.map(node => node.z))
 
-      geom.vertices.push(v1)
-      geom.vertices.push(v2)
-      geom.vertices.push(v3)
+      const max = 188
 
-      geom.faces.push(new Three.Face3(0, 1, 2))
-      geom.computeFaceNormals()
+      const nodesMap = {}
+      this.response.nodes.forEach(node => {
+        nodesMap[node['name']] = [((node.x - X) / max), ((node.y - Y) / max), ((node.z - Z) / max)]
+      })
 
-      this.mesh = new Three.Mesh(geom, new Three.LineBasicMaterial({ color: 0x0000ff }))
-      this.scene.add(this.mesh)
+      const vertices = this.response.connections.map((connection) => ({
+        ...connection,
+        from: nodesMap[connection.from],
+        to: nodesMap[connection.to]
+      }))
+
+
+      vertices.forEach((vert) => {
+        this.drawLine(vert, 0xffffff)
+      })
+
+      const angles = this.response.angle.map(angle => nodesMap[angle])
+      console.log(angles, 'angles')
+      const combinations = [[0, 1], [1, 2], [2, 0]]
+      combinations.forEach(combination => {
+        this.drawLine({
+          from: angles[combination[0]],
+          to: angles[combination[1]]
+        }, 0xD2603E)
+      })
 
       this.renderer = new Three.WebGLRenderer({ antialias: true, alpha: true })
       this.renderer.setClearColor(0x000000, 0)

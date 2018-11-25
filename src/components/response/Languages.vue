@@ -1,14 +1,21 @@
 <template>
   <div class="languages-response">
     <div class="words">
-      <div v-for="(word, i) in data.words || test.words" :key="i" class="word">
-        <div
-          v-for="(translation, j) in word"
-          :key="translation"
-          class="translation"
-          :class="{ 'translation--white' : j === 0 }"
-        >
-          {{ translation }}
+      <div v-for="(word, i) in data" :key="i" class="word">
+        <div class="translation translation--white">
+          {{ word.en }}
+        </div>
+        <div class="translation">
+          {{ word.pl }}
+        </div>
+        <div class="translation">
+          {{ word.de }}
+        </div>
+        <div class="translation">
+          {{ word.es }}
+        </div>
+        <div class="translation">
+          {{ word.fr }}
         </div>
       </div>
     </div>
@@ -21,16 +28,6 @@ export default {
     data: {
       type: [Object, Array],
       required: true
-    }
-  },
-  data () {
-    return {
-      test: {
-        words: [
-          ['Chryzantema', 'bottle', 'бутылка'],
-          ['woda', 'watter', 'вода']
-        ]
-      }
     }
   }
 }

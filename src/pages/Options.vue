@@ -9,7 +9,7 @@
           <span class="background--color__title">
             {{ loadingText }}
           </span>
-          <preloader/>
+          <preloader v-if="!error"/>
         </div>
       </div>
       <video
