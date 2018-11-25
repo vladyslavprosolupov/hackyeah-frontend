@@ -51,7 +51,6 @@ export default {
       return !this.error ? 'Making some magic...' : 'Our magic not enough here... Try again'
     },
     canvasHidden () {
-      console.log(!(this.loading || this.response))
       return !(this.loading || this.response)
     },
     currentView () {
