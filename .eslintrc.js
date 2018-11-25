@@ -27,6 +27,7 @@ module.exports = {
         "ignores": []
       }
     ],
+    'vue/no-v-html': 'off',
     'vue/html-closing-bracket-spacing': 0,
     'vue/max-attributes-per-line': [2, {
       'singleline': 3,
@@ -35,5 +36,8 @@ module.exports = {
         'allowFirstLine': false
       }
     }]
+  },
+  globals: {
+    THREE: true
   }
 }

@@ -70,15 +70,16 @@ export default {
   methods: {
     ...mapMutations(['setLoading', 'setResponse', 'setAnimationDir', 'setType']),
     goBack () {
-      this.setLoading(false)
-      this.setResponse(null)
-      if (!(this.loading || this.response)) {
+      if (!this.loading && !this.response) {
         this.setAnimationDir('slide-right')
         this.setType('options')
         this.$nextTick(() => {
           this.setAnimationDir('slide-left')
         })
       }
+
+      this.setLoading(false)
+      this.setResponse(null)
     },
     load () {
       this.setLoading(true)
@@ -88,6 +89,11 @@ export default {
         'languages': '/languages'
       }
 
+
+      // const res = {}
+      // console.log(res)
+      // this.setResponse(res)
+      // this.setLoading(false)
       axios.post(urls[this.type], {
         image: capturePhoto()
       }).then(r => {
@@ -142,7 +148,7 @@ export default {
     padding: 14px;
     @include center-content;
     transition: background-color .15s linear .35s;
-    z-index: 2;
+    z-index: 100000;
 
     &--no-bg {
       background-color: rgba(255, 255, 255, 0);

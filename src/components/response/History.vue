@@ -9,9 +9,7 @@
     <div class="name">
       {{ data.name || 'Bolesław Chrobry' }}
     </div>
-    <div class="info">
-      {{ data.wikipedia_paragraph || `Przykładowe info<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>` }}
-    </div>
+    <div class="info" v-html="data.wikipedia_paragraph || `Przykładowe info`"/>
     <div class="youtube">
       <iframe
         width="340"

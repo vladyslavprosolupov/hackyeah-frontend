@@ -1,6 +1,6 @@
 <template>
   <div class="geometry-response">
-    <div class="threejs"/>
+    <three-j-s/>
     <div class="comment">
       <span class="title">
         pitch, roll, yaw...
@@ -10,7 +10,12 @@
 </template>
 
 <script>
+import ThreeJS from '@/components/ThreeJS'
+
 export default {
+  components: {
+    ThreeJS
+  },
   props: {
     data: {
       type: [Object, Array],
